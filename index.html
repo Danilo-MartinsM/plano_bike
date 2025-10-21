@@ -1,74 +1,77 @@
-<!doctype html>
-<script src="https://kit.fontawesome.com/a2d9b3c9c1.js" crossorigin="anonymous"></script>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano de Treino – Início</title>
 <link rel="stylesheet" href="assets/style.css">
+<script src="https://kit.fontawesome.com/a2d9b3c9c1.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
 <header class="topbar">
-<div class="container">
-<h1>Plano Rápido - Bicicleta Ergométrica</h1>
-<nav>
-<a href="index.html" class="active">Início</a>
-<a href="semana1.html">Semana 1</a>
-<a href="semana2.html">Semana 2</a>
-</nav>
-</div>
+  <div class="container">
+    <h1>Plano de Treino – Bicicleta Ergométrica</h1>
+    <nav>
+      <a href="index.html" class="active">Início</a>
+      <a href="treino.html">Treinos</a>
+    </nav>
+  </div>
 </header>
 
-
 <main class="container main-grid">
-<section class="card welcome">
-<h2>Bem-vindo 👋</h2>
-<p class="muted">Este plano de 4 semanas está sendo iniciado com as duas primeiras semanas carregadas — você pode usá-lo offline e subir no GitHub Pages.</p>
-<div class="start-row">
-<button id="btn-start" class="btn-primary">Começar meu treino</button>
-<div class="progress-visual">
-<div id="progress-bar" class="progress-bar"><span id="progress-fill"></span></div>
-<div id="progress-label" class="muted small">0 de 14 dias concluídos</div>
-</div>
-</div>
-<div class="tips">
-<h3>Dicas rápidas</h3>
-<ul id="tip-list">
-<!-- dicas inseridas por JS -->
-</ul>
-</div>
-</section>
+  <!-- Bem-vindo -->
+  <section class="card welcome">
+    <h2>Bem-vindo 👋</h2>
+    <p class="muted">Este plano de 3 meses está pronto para você começar. Use-o offline ou no GitHub Pages.</p>
+    
+    <div class="start-row">
+      <button id="btn-start" class="btn-primary">Ir para meu treino de hoje</button>
+      <div class="progress-visual">
+        <div id="progress-bar" class="progress-bar">
+          <span id="progress-fill"></span>
+        </div>
+        <div id="progress-label" class="muted small">0 de 84 dias concluídos</div>
+      </div>
+    </div>
 
+    <div class="tips">
+      <h3>Dicas rápidas</h3>
+      <ul id="tip-list">
+        <!-- dicas inseridas por JS -->
+      </ul>
+    </div>
+  </section>
 
-<aside class="card stats">
-<h3>Seu dia atual</h3>
-<div id="today-card" class="today-card">
-<!-- inserido por JS -->
-</div>
+  <!-- Seu dia atual -->
+  <aside class="card stats">
+    <h3>Seu dia atual</h3>
+    <div id="today-card" class="today-card">
+      <!-- inserido por JS -->
+    </div>
 
+    <h3>Progresso geral</h3>
+    <p id="summary" class="muted">Carregando...</p>
 
-<h3>Progresso</h3>
-<p id="summary" class="muted">Carregando...</p>
+    <div class="small-note muted">Início do plano: <strong>19/10/2025</strong></div>
+  </aside>
 
+  <!-- Atalhos e informações -->
+  <section class="card more">
+    <h3>Atalhos</h3>
+    <div class="links">
+      <a class="btn-outline" href="treino.html">Ir para Treinos</a>
+    </div>
 
-<div class="small-note muted">Início do plano: <strong>19/10/2025</strong></div>
-</aside>
-
-
-<section class="card more">
-<h3>Atalhos</h3>
-<div class="links">
-<a class="btn-outline" href="semana1.html">Ir para Semana 1</a>
-<a class="btn-outline" href="semana2.html">Ir para Semana 2</a>
-</div>
-
-
-<h3 style="margin-top:1rem">Sobre o plano</h3>
-<p class="muted">O objetivo é construir hábito sem exaustão. Siga as diretrizes de hidratação e alimentação do PDF e ajuste a resistência conforme orientado.</p>
-</section>
+    <h3 style="margin-top:1rem">Sobre o plano</h3>
+    <p class="muted">O objetivo é construir hábito sem exaustão. Ajuste a intensidade conforme se sentir confortável e siga as orientações de hidratação.</p>
+  </section>
 </main>
 
-
 <footer class="footer">
-<div class="container">Feito com ♥ — exporte este site como está para o GitHub Pages.</div>
+  <div class="container">Feito com ♥ — exporte este site como está para o GitHub Pages.</div>
 </footer>
 
-
-<script src="assets/script.js"></script>
+<script src="assets/script3meses.js"></script>
 </body>
 </html>
