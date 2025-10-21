@@ -8,56 +8,68 @@
   --border: #E0F2F8;
   --radius: 14px;
   --shadow: 0 6px 18px rgba(21,101,192,0.08);
-  --glass: rgba(255,255,255,0.6);
 }
 
+/* Reset e base */
 * { box-sizing: border-box; }
-html, body { height: 100%; margin:0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, 'Helvetica Neue', Arial; background: linear-gradient(180deg, var(--bg) 0%, #F7FBFD 100%); color:#0B2545; }
+html, body { height: 100%; margin: 0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, 'Helvetica Neue', Arial; background: var(--bg); color: #0B2545; }
+a { text-decoration: none; color: inherit; }
 
-.container { max-width:1100px; margin:0 auto; padding:1.25rem; }
+/* Container */
+.container { max-width: 1100px; margin: 0 auto; padding: 1.25rem; }
 
-.topbar { background:transparent; padding:.75rem 0; }
-.topbar .container { display:flex; justify-content:space-between; align-items:center; }
-nav a { margin-left:1rem; text-decoration:none; color:var(--muted); }
-nav a.active { color:var(--primary); font-weight:600; }
+/* Topbar */
+.topbar { background: transparent; padding: .75rem 0; }
+.topbar .container { display: flex; justify-content: space-between; align-items: center; }
+nav a { margin-left: 1rem; color: var(--muted); font-weight: 500; }
+nav a.active { color: var(--primary); font-weight: 600; }
 
-.main-grid { display:grid; grid-template-columns:1fr 320px; gap:1rem; padding-bottom:2rem; }
-@media (max-width:900px) { .main-grid { grid-template-columns:1fr; } }
+/* Main Grid */
+.main-grid { display: grid; grid-template-columns: 1fr 320px; gap: 1rem; padding-bottom: 2rem; }
+@media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
 
-.card { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:1rem; }
-.welcome h2 { margin-top:0; }
+/* Cards */
+.card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1rem; margin-bottom: 1rem; }
 
-.btn-primary { background:var(--primary); color:white; border:none; padding:.6rem 1rem; border-radius:10px; cursor:pointer; }
-.btn-outline { border:2px solid var(--border); background:transparent; padding:.5rem .8rem; border-radius:8px; text-decoration:none; color:var(--primary); }
+/* Botões */
+.btn-primary { background: var(--primary); color: #fff; border: none; padding: .6rem 1rem; border-radius: 10px; cursor: pointer; transition: background .3s; }
+.btn-primary:hover { background: var(--primary-dark); }
 
-.start-row { display:flex; align-items:center; gap:1rem; margin-top:1rem; }
-.progress-visual { flex:1; }
-.progress-bar { height:12px; background:var(--border); border-radius:999px; overflow:hidden; }
-.progress-bar span { display:block; height:100%; width:0; background:linear-gradient(90deg,var(--primary),var(--primary-dark)); transition:width .6s; }
+.btn-outline { border: 2px solid var(--border); background: transparent; padding: .5rem .8rem; border-radius: 8px; color: var(--primary); display: inline-block; margin-right: .5rem; }
 
-.muted { color:var(--muted); }
-.small { font-size:.85rem; }
-.tips ul { padding-left:1rem; }
+/* Progress */
+.progress-bar { height: 12px; background: var(--border); border-radius: 999px; overflow: hidden; margin-top: .5rem; }
+.progress-bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--primary), var(--primary-dark)); transition: width .6s; }
 
-.today-card { padding:.6rem; border-radius:10px; background:linear-gradient(180deg, rgba(33,150,243,0.06), rgba(21,101,192,0.02)); }
+/* Muted & Small */
+.muted { color: var(--muted); }
+.small { font-size: .85rem; }
 
-.weeks-grid { display:grid; grid-template-columns:1fr; gap:1rem; margin-top:1rem; }
+/* Days Grid */
+.weeks-grid { display: grid; gap: 1rem; }
+.week-card { padding: 1rem; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); }
+.week-card h3 { margin-top: 0; }
+.days-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1rem; }
+@media (max-width: 700px) { .days-grid { grid-template-columns: 1fr; } }
 
-.week-card { padding:1rem; border-radius:var(--radius); background:var(--card); box-shadow:var(--shadow); }
+/* Day Cards */
+.day-card { padding: 1rem; border-radius: 12px; border: 1px solid var(--border); background: linear-gradient(180deg, #fff, rgba(230,244,249,0.6)); transition: transform .2s; }
+.day-card:hover { transform: translateY(-2px); }
+.day-card h4 { margin: 0 0 .4rem 0; }
+.day-card .meta { font-size: .9rem; color: var(--muted); margin-bottom: .6rem; }
+.day-card .small-note { font-size: .85rem; margin-bottom: .6rem; }
+.checkbox-row { display: flex; align-items: center; gap: .5rem; }
+.checkbox-row input[type="checkbox"] { width: 18px; height: 18px; }
 
-.days-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; margin-top:1rem; }
-@media (max-width:700px) { .days-grid { grid-template-columns:1fr; } }
+/* Destaque do dia atual */
+.day-card.current-day { border: 2px solid var(--primary); background: linear-gradient(180deg, #E1F0FF, #FFFFFF); box-shadow: 0 0 12px rgba(33,150,243,0.3); }
 
-.day { padding:1rem; border-radius:12px; border:1px solid var(--border); background:linear-gradient(180deg, #fff, rgba(230,244,249,0.6)); }
-.day h4 { margin:0 0 .4rem 0; }
-.day .meta { font-size:.9rem; color:var(--muted); margin-bottom:.6rem; }
-.checkbox-row { display:flex; align-items:center; justify-content:space-between; margin-top:.6rem; }
-.checkbox-row label { display:flex; align-items:center; gap:.5rem; }
-.small-note { font-size:.85rem; }
+/* Footer */
+.footer { padding: 1rem 0; text-align: center; color: var(--muted); }
 
-.current-day { border:2px solid var(--primary); background:linear-gradient(180deg, rgba(33,150,243,0.15), rgba(21,101,192,0.05)); }
-
-.footer { padding:1rem 0; text-align:center; color:var(--muted); }
-
-.nav-week { display:flex; gap:.6rem; margin-top:1rem; }
-.links a { display:inline-block; margin-right:.5rem; }
+/* Responsividade completa para mobile */
+@media (max-width: 500px) {
+  .topbar .container { flex-direction: column; gap: .5rem; }
+  nav a { margin-left: 0; margin-right: 1rem; }
+  .btn-primary, .btn-outline { width: 100%; text-align: center; }
+}

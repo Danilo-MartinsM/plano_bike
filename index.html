@@ -80,7 +80,9 @@
 
 <script src="assets/script3meses.js"></script>
 <script>
-  // Renderiza dicas iniciais na página index
+  const TOTAL_DAYS = 84;
+
+  // ---------- DICAS ----------
   const TIPS = [
     'Hidrate-se: meta ~3L/dia. Leve sua garrafa.',
     'Evite bebidas açucaradas antes e depois do treino.',
@@ -88,7 +90,6 @@
     'Ajuste o assento: perna quase esticada com leve flexão no joelho.',
     'Se conseguir conversar durante o esforço, a intensidade está adequada.'
   ];
-
   const ul = document.getElementById('tip-list');
   TIPS.forEach(t => {
     const li = document.createElement('li');
@@ -96,19 +97,65 @@
     ul.appendChild(li);
   });
 
-  // Botão "Começar meu treino" leva ao dia atual
+  // ---------- PROGRESSO ----------
+  function loadProgress(){
+    try{ return JSON.parse(localStorage.getItem('plano_3meses_progress_v1')) || {}; }
+    catch(e){ return {}; }
+  }
+
+  function updateProgressUI(){
+    const progress = loadProgress();
+    const doneCount = Object.values(progress).filter(Boolean).length;
+    const percent = Math.round((doneCount / TOTAL_DAYS) * 100);
+
+    const fill = document.getElementById('progress-fill');
+    if(fill) fill.style.width = percent + '%';
+
+    const label = document.getElementById('progress-label');
+    if(label) label.textContent = `${doneCount} de ${TOTAL_DAYS} dias concluídos`;
+
+    const summary = document.getElementById('summary');
+    if(summary) summary.textContent = `${doneCount} de ${TOTAL_DAYS} dias completos`;
+  }
+
+  // ---------- DIA ATUAL ----------
+  function renderTodayCard(){
+    const startDate = new Date(2025, 9, 19);
+    const t = new Date();
+    let dayIndex = Math.floor((t - startDate)/(1000*60*60*24)) + 1;
+    if(dayIndex < 1) dayIndex = 1;
+    if(dayIndex > TOTAL_DAYS) dayIndex = TOTAL_DAYS;
+
+    const todayCard = document.getElementById('today-card');
+    if(!todayCard) return;
+    todayCard.innerHTML = `
+      <strong>Dia ${dayIndex}</strong>
+      <div class="muted small">10-30 min • Intensidade: 1-4</div>
+      <div style="margin-top:.6rem">
+        <a href="treino.html#month${Math.ceil(dayIndex/28)}" class="btn-primary">Abrir Treino</a>
+      </div>
+    `;
+  }
+
+  // ---------- BOTÃO INICIAR ----------
   document.getElementById('btn-start').addEventListener('click', () => {
-    const todayIndex = (() => {
-      const startDate = new Date(2025, 9, 19);
-      const t = new Date();
-      const diffDays = Math.floor((t - startDate) / (1000*60*60*24)) + 1;
-      if(diffDays < 1) return 1;
-      if(diffDays > 84) return 84;
-      return diffDays;
-    })();
-    const month = Math.ceil(todayIndex / 28); // cada mês 4 semanas = 28 dias
-    location.href = `treino.html#month${month}`;
+    const startDate = new Date(2025, 9, 19);
+    const t = new Date();
+    let todayIndex = Math.floor((t - startDate)/(1000*60*60*24)) + 1;
+    if(todayIndex < 1) todayIndex = 1;
+    if(todayIndex > TOTAL_DAYS) todayIndex = TOTAL_DAYS;
+    location.href = `treino.html#month${Math.ceil(todayIndex/28)}`;
   });
+
+  // ---------- ATUALIZAÇÃO PERIÓDICA ----------
+  function init(){
+    renderTodayCard();
+    updateProgressUI();
+    setInterval(updateProgressUI,1000); // atualiza a cada segundo
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+
 </script>
 
 </body>

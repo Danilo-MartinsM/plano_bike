@@ -6,6 +6,11 @@
   <title>Plano de Treino – 3 Meses</title>
   <link rel="stylesheet" href="assets/style.css">
   <script src="https://kit.fontawesome.com/a2d9b3c9c1.js" crossorigin="anonymous"></script>
+  <style>
+    .week-complete { border: 2px solid #4CAF50; }
+    .month-complete h2::after { content: " ✔"; color: #4CAF50; }
+    .current-day { border: 2px solid var(--primary-dark); }
+  </style>
 </head>
 <body>
 
@@ -24,25 +29,19 @@
   <!-- Mês 1 -->
   <section class="card month" id="month1">
     <h2>Mês 1</h2>
-    <div class="weeks-grid">
-      <!-- Semanas geradas via JS -->
-    </div>
+    <div class="weeks-grid"></div>
   </section>
 
   <!-- Mês 2 -->
   <section class="card month" id="month2">
     <h2>Mês 2</h2>
-    <div class="weeks-grid">
-      <!-- Semanas geradas via JS -->
-    </div>
+    <div class="weeks-grid"></div>
   </section>
 
   <!-- Mês 3 -->
   <section class="card month" id="month3">
     <h2>Mês 3</h2>
-    <div class="weeks-grid">
-      <!-- Semanas geradas via JS -->
-    </div>
+    <div class="weeks-grid"></div>
   </section>
 
 </main>
@@ -53,36 +52,103 @@
 
 <script src="assets/script3meses.js"></script>
 <script>
-  // ---------- DICAS RÁPIDAS (opcional no treino) ----------
-  const TIPS = [
-    'Hidrate-se antes e depois do treino.',
-    'Mantenha postura correta na bicicleta.',
-    'Não force além do confortável.',
-    'Aumente a resistência gradualmente.',
-    'Recupere-se nos dias de descanso.'
-  ];
+(function(){
+  const TOTAL_DAYS = 84;
 
-  // ---------- FUNÇÕES AUXILIARES ----------
-  function scrollToCurrentDay() {
-    const todayIndex = (() => {
-      const startDate = new Date(2025, 9, 19);
-      const t = new Date();
-      const diffDays = Math.floor((t - startDate) / (1000*60*60*24)) + 1;
-      if(diffDays < 1) return 1;
-      if(diffDays > 84) return 84;
-      return diffDays;
-    })();
-    const el = document.querySelector(`input[data-day="${todayIndex}"]`);
+  function loadProgress(){
+    try{
+      return JSON.parse(localStorage.getItem('plano_3meses_progress_v1')) || {};
+    } catch(e){ return {}; }
+  }
+  function saveProgress(obj){
+    try{ localStorage.setItem('plano_3meses_progress_v1', JSON.stringify(obj)); } catch(e){}
+  }
+
+  function renderMonth(monthNumber){
+    const container = document.querySelector(`#month${monthNumber} .weeks-grid`);
+    if(!container) return;
+    container.innerHTML='';
+
+    const startWeek = (monthNumber-1)*4;
+    const progress = loadProgress();
+
+    for(let w=0; w<4; w++){
+      const weekCard = document.createElement('div');
+      weekCard.className='week-card card';
+      const startDay = (startWeek + w) * 7;
+      const endDay = startDay + 7;
+
+      let html=`<h3>Semana ${w+1}</h3><div class="days-grid">`;
+      for(let i=startDay;i<endDay;i++){
+        const dayNum = i+1;
+        const checked = progress['day-'+dayNum]?'checked':'';
+        html += `<div class="day day-card">
+          <h4>Dia ${dayNum}</h4>
+          <div class="meta">10-30 min • Intensidade: 1-4</div>
+          <div class="checkbox-row">
+            <label>
+              <input type="checkbox" data-day="${dayNum}" ${checked}>
+              Concluído
+            </label>
+          </div>
+        </div>`;
+      }
+      html += `</div>`;
+      weekCard.innerHTML = html;
+      container.appendChild(weekCard);
+    }
+    updateWeekAndMonthStatus(monthNumber);
+  }
+
+  function updateWeekAndMonthStatus(monthNumber){
+    const container = document.querySelector(`#month${monthNumber} .weeks-grid`);
+    if(!container) return;
+    const weeks = container.querySelectorAll('.week-card');
+    weeks.forEach(week=>{
+      const checkboxes = week.querySelectorAll('input[type="checkbox"]');
+      const allChecked = Array.from(checkboxes).every(cb=>cb.checked);
+      if(allChecked) week.classList.add('week-complete');
+      else week.classList.remove('week-complete');
+    });
+    const allWeeks = Array.from(weeks).every(w=>w.classList.contains('week-complete'));
+    const month = document.querySelector(`#month${monthNumber}`);
+    if(allWeeks) month.classList.add('month-complete');
+    else month.classList.remove('month-complete');
+  }
+
+  function bindCheckboxes(){
+    document.addEventListener('change',function(e){
+      const tgt=e.target;
+      if(tgt.matches('input[type="checkbox"][data-day]')){
+        const progress=loadProgress();
+        progress['day-'+tgt.dataset.day]=tgt.checked;
+        saveProgress(progress);
+        // Atualiza status semana/mês
+        const monthNumber = Math.ceil(tgt.dataset.day / 28);
+        updateWeekAndMonthStatus(monthNumber);
+      }
+    });
+  }
+
+  function scrollToCurrentDay(){
+    const startDate = new Date(2025, 9, 19);
+    const t = new Date();
+    let todayIndex = Math.floor((t - startDate)/(1000*60*60*24))+1;
+    if(todayIndex<1) todayIndex=1;
+    if(todayIndex>84) todayIndex=84;
+    const el=document.querySelector(`input[data-day="${todayIndex}"]`);
     if(el){
       el.closest('.day-card').classList.add('current-day');
       el.scrollIntoView({behavior:'smooth', block:'center'});
     }
   }
 
-  // ---------- INICIALIZAÇÃO ----------
-  document.addEventListener('DOMContentLoaded', () => {
-    scrollToCurrentDay();
-  });
+  // Render todos os meses
+  [1,2,3].forEach(renderMonth);
+  bindCheckboxes();
+  scrollToCurrentDay();
+
+})();
 </script>
 
 </body>
