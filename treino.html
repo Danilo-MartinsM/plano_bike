@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plano de Treino – 3 Meses</title>
-<link rel="stylesheet" href="assets/style.css">
-<script src="https://kit.fontawesome.com/a2d9b3c9c1.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plano de Treino – 3 Meses</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="https://kit.fontawesome.com/a2d9b3c9c1.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -21,25 +21,27 @@
 
 <main class="container">
 
-  <!-- Meses -->
+  <!-- Mês 1 -->
   <section class="card month" id="month1">
     <h2>Mês 1</h2>
     <div class="weeks-grid">
-      <!-- Semanas inseridas pelo JS -->
+      <!-- Semanas geradas via JS -->
     </div>
   </section>
 
+  <!-- Mês 2 -->
   <section class="card month" id="month2">
     <h2>Mês 2</h2>
     <div class="weeks-grid">
-      <!-- Semanas inseridas pelo JS -->
+      <!-- Semanas geradas via JS -->
     </div>
   </section>
 
+  <!-- Mês 3 -->
   <section class="card month" id="month3">
     <h2>Mês 3</h2>
     <div class="weeks-grid">
-      <!-- Semanas inseridas pelo JS -->
+      <!-- Semanas geradas via JS -->
     </div>
   </section>
 
@@ -50,5 +52,38 @@
 </footer>
 
 <script src="assets/script3meses.js"></script>
+<script>
+  // ---------- DICAS RÁPIDAS (opcional no treino) ----------
+  const TIPS = [
+    'Hidrate-se antes e depois do treino.',
+    'Mantenha postura correta na bicicleta.',
+    'Não force além do confortável.',
+    'Aumente a resistência gradualmente.',
+    'Recupere-se nos dias de descanso.'
+  ];
+
+  // ---------- FUNÇÕES AUXILIARES ----------
+  function scrollToCurrentDay() {
+    const todayIndex = (() => {
+      const startDate = new Date(2025, 9, 19);
+      const t = new Date();
+      const diffDays = Math.floor((t - startDate) / (1000*60*60*24)) + 1;
+      if(diffDays < 1) return 1;
+      if(diffDays > 84) return 84;
+      return diffDays;
+    })();
+    const el = document.querySelector(`input[data-day="${todayIndex}"]`);
+    if(el){
+      el.closest('.day-card').classList.add('current-day');
+      el.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+  }
+
+  // ---------- INICIALIZAÇÃO ----------
+  document.addEventListener('DOMContentLoaded', () => {
+    scrollToCurrentDay();
+  });
+</script>
+
 </body>
 </html>
