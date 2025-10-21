@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plano de Treino – Início</title>
-<link rel="stylesheet" href="assets/style.css">
-<script src="https://kit.fontawesome.com/a2d9b3c9c1.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plano de Treino – Início</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="https://kit.fontawesome.com/a2d9b3c9c1.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -20,17 +20,18 @@
 </header>
 
 <main class="container main-grid">
-  <!-- Bem-vindo -->
+
+  <!-- Card de boas-vindas e progresso -->
   <section class="card welcome">
     <h2>Bem-vindo 👋</h2>
-    <p class="muted">Este plano de 3 meses está pronto para você começar. Use-o offline ou no GitHub Pages.</p>
-    
+    <p class="muted">
+      Este plano completo de 3 meses já está carregado — você pode acompanhar offline ou exportar para GitHub Pages.
+    </p>
+
     <div class="start-row">
-      <button id="btn-start" class="btn-primary">Ir para meu treino de hoje</button>
+      <button id="btn-start" class="btn-primary">Começar meu treino</button>
       <div class="progress-visual">
-        <div id="progress-bar" class="progress-bar">
-          <span id="progress-fill"></span>
-        </div>
+        <div id="progress-bar" class="progress-bar"><span id="progress-fill"></span></div>
         <div id="progress-label" class="muted small">0 de 84 dias concluídos</div>
       </div>
     </div>
@@ -38,40 +39,77 @@
     <div class="tips">
       <h3>Dicas rápidas</h3>
       <ul id="tip-list">
-        <!-- dicas inseridas por JS -->
+        <!-- inseridas via JS -->
       </ul>
     </div>
   </section>
 
-  <!-- Seu dia atual -->
+  <!-- Card do dia atual -->
   <aside class="card stats">
     <h3>Seu dia atual</h3>
     <div id="today-card" class="today-card">
-      <!-- inserido por JS -->
+      <!-- inserido via JS -->
     </div>
 
-    <h3>Progresso geral</h3>
+    <h3>Progresso</h3>
     <p id="summary" class="muted">Carregando...</p>
 
     <div class="small-note muted">Início do plano: <strong>19/10/2025</strong></div>
   </aside>
 
-  <!-- Atalhos e informações -->
+  <!-- Card de atalhos -->
   <section class="card more">
     <h3>Atalhos</h3>
     <div class="links">
-      <a class="btn-outline" href="treino.html">Ir para Treinos</a>
+      <a class="btn-outline" href="treino.html#month1">Mês 1</a>
+      <a class="btn-outline" href="treino.html#month2">Mês 2</a>
+      <a class="btn-outline" href="treino.html#month3">Mês 3</a>
     </div>
 
     <h3 style="margin-top:1rem">Sobre o plano</h3>
-    <p class="muted">O objetivo é construir hábito sem exaustão. Ajuste a intensidade conforme se sentir confortável e siga as orientações de hidratação.</p>
+    <p class="muted">
+      O objetivo é criar hábito sem exaustão. Siga hidratação e alimentação recomendadas e ajuste a resistência conforme sentir.
+    </p>
   </section>
+
 </main>
 
 <footer class="footer">
-  <div class="container">Feito com ♥ — exporte este site como está para o GitHub Pages.</div>
+  <div class="container">Feito com ♥</div>
 </footer>
 
 <script src="assets/script3meses.js"></script>
+<script>
+  // Renderiza dicas iniciais na página index
+  const TIPS = [
+    'Hidrate-se: meta ~3L/dia. Leve sua garrafa.',
+    'Evite bebidas açucaradas antes e depois do treino.',
+    'Inclua proteína e fibras nas refeições principais.',
+    'Ajuste o assento: perna quase esticada com leve flexão no joelho.',
+    'Se conseguir conversar durante o esforço, a intensidade está adequada.'
+  ];
+
+  const ul = document.getElementById('tip-list');
+  TIPS.forEach(t => {
+    const li = document.createElement('li');
+    li.textContent = t;
+    ul.appendChild(li);
+  });
+
+  // Botão "Começar meu treino" leva ao dia atual
+  document.getElementById('btn-start').addEventListener('click', () => {
+    const todayIndex = (() => {
+      const startDate = new Date(2025, 9, 19);
+      const t = new Date();
+      const diffDays = Math.floor((t - startDate) / (1000*60*60*24)) + 1;
+      if(diffDays < 1) return 1;
+      if(diffDays > 84) return 84;
+      return diffDays;
+    })();
+    const month = Math.ceil(todayIndex / 28); // cada mês 4 semanas = 28 dias
+    location.href = `treino.html#month${month}`;
+  });
+</script>
+
 </body>
 </html>
